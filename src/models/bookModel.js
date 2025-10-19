@@ -35,3 +35,30 @@ function addBook(data) {
   books.push(newBook);
   return id;
 }
+
+function updateBook(id, data) {
+  const index = books.findIndex(b => b.id === id);
+  if (index === -1) return false;
+
+  const updatedAt = new Date().toISOString();
+  const finished = data.pageCount === data.readPage;
+
+  books[index] = {
+    ...books[index],
+    ...data,
+    finished,
+    updatedAt,
+  };
+
+  return true;
+}
+
+function deleteBook(id) {
+  const index = books.findIndex(b => b.id === id);
+  if (index === -1) return false;
+
+  books.splice(index, 1);
+  return true;
+}
+
+

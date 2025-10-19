@@ -61,4 +61,11 @@ function deleteBook(id) {
   return true;
 }
 
+module.exports = {
+  getAllBooks,
+  getBookById,
+  addBook,
+  updateBook,
+  deleteBook,
+};
 

@@ -103,4 +103,21 @@ exports.updateBook = (req, res) => {
   });
 };
 
+exports.deleteBook = (req, res) => {
+  const deleted = bookModel.deleteBook(req.params.id);
+
+  if (!deleted) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Buku gagal dihapus. Id tidak ditemukan',
+    });
+  }
+
+  res.json({
+    status: 'success',
+    message: 'Buku berhasil dihapus',
+  });
+};
+
+
 

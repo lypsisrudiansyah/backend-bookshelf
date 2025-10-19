@@ -1,8 +1,32 @@
 const bookModel = require('../models/bookModel');
 
 exports.getAllBooks = (req, res) => {
-  const books = bookModel.getAllBooks();
+  const { reading, finished, name } = req.query; 
+  let books = bookModel.getAllBooks();
+  if (books.length > 0) {
+    if (reading !== undefined) {
+      if (reading === '1') {
+        books = books.filter(b => b.reading === true);
+      } else if (reading === '0') {
+        books = books.filter(b => b.reading === false);
+      }
+    }
+    if (finished !== undefined) {
+      if (finished === '1') {
+        books = books.filter(b => b.finished === true);
+      } else if (finished === '0') {
+        books = books.filter(b => b.finished === false);
+      }
+    }
+
+    if (name !== undefined) {
+      const keyword = name.toLowerCase();
+      books = books.filter(b => b.name.toLowerCase().includes(keyword));
+    }
+  }
+  // const simplified = books;
   const simplified = books.map(({ id, name, publisher }) => ({ id, name, publisher }));
+
 
   res.json({
     status: 'success',
